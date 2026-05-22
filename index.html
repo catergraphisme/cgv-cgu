@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CGV & CGU — Cater Graphisme</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Share+Tech+Mono&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #1E1E1E; --bg2: #252525; --bg3: #2E2E2E;
+    --orange: #F5860A; --orange-light: #FFAC45; --orange-dim: rgba(245,134,10,0.15);
+    --white: #F0EDE6; --gray: #888880; --border: rgba(245,134,10,0.2);
+    --border-dim: rgba(255,255,255,0.06); --tan: #7A6245;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--white); font-family: 'Barlow', sans-serif; font-size: 15px; line-height: 1.7; }
+
+  /* PRINT */
+  @media print {
+    body { background: #fff; color: #111; }
+    .sidebar, .toc-mobile { display: none; }
+    .main { margin: 0; padding: 20px; max-width: 100%; }
+    .article-card { background: #fff; border: 1px solid #ddd; break-inside: avoid; }
+    .section-header { background: #f5f5f5; }
+  }
+
+  /* HEADER */
+  header {
+    background: var(--bg2);
+    border-bottom: 2px solid var(--orange);
+    padding: 40px 48px 32px;
+    position: relative; overflow: hidden;
+  }
+  header::after {
+    content: '';
+    position: absolute; bottom: -1px; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--orange) 0%, transparent 100%);
+  }
+  .header-eyebrow {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px; letter-spacing: 4px; color: var(--orange);
+    text-transform: uppercase; margin-bottom: 12px;
+  }
+  .header-brand {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 52px; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 2px; color: var(--white); line-height: 1;
+    margin-bottom: 4px;
+  }
+  .header-brand span { color: var(--orange); }
+  .header-doc-type {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 4px; color: var(--gray); margin-bottom: 20px;
+  }
+  .header-badges {
+    display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px;
+  }
+  .badge {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px; letter-spacing: 1px;
+    background: var(--orange-dim); border: 1px solid var(--border);
+    color: var(--orange-light); padding: 5px 12px;
+  }
+  .header-note {
+    font-size: 12px; color: var(--gray);
+    border-left: 2px solid var(--orange);
+    padding-left: 12px; margin-top: 8px;
+    font-style: italic;
+  }
+
+  /* LAYOUT */
+  .layout { display: flex; min-height: 100vh; }
+
+  .sidebar {
+    width: 240px; flex-shrink: 0;
+    background: var(--bg2);
+    border-right: 1px solid var(--border-dim);
+    padding: 28px 0;
+    position: sticky; top: 0; height: 100vh;
+    overflow-y: auto;
+  }
+  .sidebar-title {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px; letter-spacing: 3px; color: var(--orange);
+    text-transform: uppercase; padding: 0 20px 16px;
+    border-bottom: 1px solid var(--border-dim);
+    margin-bottom: 12px;
+  }
+  .toc-section {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 2px; color: var(--orange);
+    padding: 16px 20px 6px;
+  }
+  .toc-link {
+    display: block;
+    font-family: 'Barlow', sans-serif;
+    font-size: 12px; color: var(--gray);
+    padding: 5px 20px 5px 28px;
+    text-decoration: none;
+    border-left: 2px solid transparent;
+    transition: all 0.15s;
+  }
+  .toc-link:hover { color: var(--white); border-left-color: var(--orange); background: var(--orange-dim); }
+
+  .main {
+    flex: 1; max-width: 740px;
+    padding: 40px 48px;
+    overflow: hidden;
+  }
+
+  /* SECTION HEADER */
+  .section-header {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--orange);
+    padding: 16px 20px;
+    margin: 40px 0 24px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .section-num {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px; letter-spacing: 2px; color: var(--orange);
+    flex-shrink: 0;
+  }
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 2px; color: var(--white);
+  }
+
+  /* ARTICLE CARDS */
+  .article-card {
+    background: var(--bg2);
+    border: 1px solid var(--border-dim);
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+  .article-header {
+    background: var(--bg3);
+    border-bottom: 1px solid var(--border-dim);
+    padding: 12px 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .article-num {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px; color: var(--orange);
+    letter-spacing: 2px; flex-shrink: 0;
+  }
+  .article-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px;
+    color: var(--white);
+  }
+  .article-body {
+    padding: 18px 20px;
+  }
+  .article-body p {
+    font-size: 14px; color: #B0ADA6; line-height: 1.75;
+    margin-bottom: 10px;
+  }
+  .article-body p:last-child { margin-bottom: 0; }
+
+  /* INFO BOX */
+  .info-box {
+    background: rgba(245,134,10,0.06);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--orange);
+    padding: 12px 16px;
+    margin: 10px 0;
+    font-size: 13px; color: var(--gray);
+    font-style: italic;
+  }
+
+  /* WARNING BOX */
+  .warn-box {
+    background: rgba(220,50,50,0.06);
+    border: 1px solid rgba(220,50,50,0.2);
+    border-left: 3px solid #DC3232;
+    padding: 12px 16px;
+    margin: 10px 0;
+    font-size: 13px; color: #C8907A;
+  }
+
+  /* LEGAL INFO TABLE */
+  .legal-table { width: 100%; border-collapse: collapse; margin: 8px 0; }
+  .legal-table tr { border-bottom: 1px solid var(--border-dim); }
+  .legal-table tr:last-child { border-bottom: none; }
+  .legal-table td { padding: 8px 0; font-size: 13px; vertical-align: top; }
+  .legal-table td:first-child {
+    color: var(--gray); width: 46%;
+    font-family: 'Share Tech Mono', monospace; font-size: 11px;
+    letter-spacing: 1px; text-transform: uppercase; padding-right: 12px;
+  }
+  .legal-table td:last-child { color: var(--white); }
+  .legal-table td a { color: var(--orange-light); text-decoration: none; }
+
+  /* BULLET LIST */
+  .bullet-list { list-style: none; margin: 8px 0; }
+  .bullet-list li {
+    font-size: 14px; color: #B0ADA6; line-height: 1.6;
+    padding: 5px 0 5px 20px; position: relative;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+  }
+  .bullet-list li:last-child { border-bottom: none; }
+  .bullet-list li::before {
+    content: '▪';
+    position: absolute; left: 0;
+    color: var(--orange); font-size: 10px; top: 7px;
+  }
+  .highlight { color: var(--orange-light); font-weight: 600; }
+
+  /* DIVIDER */
+  .page-break {
+    height: 1px; background: var(--border-dim);
+    margin: 48px 0;
+    position: relative;
+  }
+  .page-break::after {
+    content: attr(data-label);
+    position: absolute; left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--bg);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px; letter-spacing: 3px; color: var(--orange);
+    padding: 0 16px; white-space: nowrap;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    padding: 20px 48px;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
+  }
+  .footer-brand {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 2px; color: var(--orange);
+  }
+  .footer-meta {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px; letter-spacing: 1px; color: var(--gray);
+  }
+
+  /* SCROLL */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--orange); }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-eyebrow">// Document juridique officiel — Version 2.0 — Mai 2026</div>
+  <div class="header-brand">CATER <span>GRAPHISME</span></div>
+  <div class="header-doc-type">Conditions Générales de Vente &amp; d'Utilisation</div>
+  <div class="header-badges">
+    <span class="badge">EWANN MARION</span>
+    <span class="badge">SIRET 101 905 842 00015</span>
+    <span class="badge">BRIVE-LA-GAILLARDE (19100)</span>
+    <span class="badge">ENTREPRENEUR INDIVIDUEL</span>
+  </div>
+  <div class="header-note">Toute commande implique l'acceptation sans réserve des présentes CGV & CGU.</div>
+</header>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar" aria-label="Table des matières">
+    <div class="sidebar-title">Sommaire</div>
+
+    <div class="toc-section">CGV</div>
+    <a class="toc-link" href="#cgv-art1">Art. 1 — Mentions légales</a>
+    <a class="toc-link" href="#cgv-art2">Art. 2 — Services</a>
+    <a class="toc-link" href="#cgv-art3">Art. 3 — Commande</a>
+    <a class="toc-link" href="#cgv-art4">Art. 4 — Tarifs</a>
+    <a class="toc-link" href="#cgv-art5">Art. 5 — Livraison</a>
+    <a class="toc-link" href="#cgv-art6">Art. 6 — Révisions</a>
+    <a class="toc-link" href="#cgv-art7">Art. 7 — Propriété intellectuelle</a>
+    <a class="toc-link" href="#cgv-art8">Art. 8 — Rétractation</a>
+    <a class="toc-link" href="#cgv-art9">Art. 9 — Responsabilité</a>
+    <a class="toc-link" href="#cgv-art10">Art. 10 — Force majeure</a>
+    <a class="toc-link" href="#cgv-art11">Art. 11 — Médiation</a>
+    <a class="toc-link" href="#cgv-art12">Art. 12 — Loi applicable</a>
+
+    <div class="toc-section">CGU</div>
+    <a class="toc-link" href="#cgu-art1">Art. 1 — Objet</a>
+    <a class="toc-link" href="#cgu-art2">Art. 2 — Comportement</a>
+    <a class="toc-link" href="#cgu-art3">Art. 3 — Modération</a>
+    <a class="toc-link" href="#cgu-art4">Art. 4 — RGPD</a>
+    <a class="toc-link" href="#cgu-art5">Art. 5 — Loi applicable</a>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <!-- ═══════════════════════════════════════════
+         CGV
+    ═══════════════════════════════════════════ -->
+    <div class="section-header">
+      <span class="section-num">SECTION 01</span>
+      <span class="section-title">Conditions Générales de Vente</span>
+    </div>
+
+    <!-- Art. 1 -->
+    <div class="article-card" id="cgv-art1">
+      <div class="article-header">
+        <span class="article-num">ART. 01</span>
+        <span class="article-title">Mentions Légales</span>
+      </div>
+      <div class="article-body">
+        <p>Les présentes CGV régissent l'activité de prestations de services numériques, de modélisation et de texturing 3D proposée par :</p>
+        <table class="legal-table">
+          <tr><td>Nom &amp; prénom</td><td>Ewann MARION</td></tr>
+          <tr><td>Nom commercial</td><td>CATER GRAPHISME</td></tr>
+          <tr><td>Forme juridique</td><td>Entrepreneur individuel (libérale non réglementée)</td></tr>
+          <tr><td>SIREN</td><td>101 905 842</td></tr>
+          <tr><td>SIRET</td><td>101 905 842 00015</td></tr>
+          <tr><td>Code NAF/APE</td><td>74.10Z — Activités spécialisées de design</td></tr>
+          <tr><td>Ville</td><td>Brive-la-Gaillarde (19100) — adresse complète disponible sur demande écrite</td></tr>
+          <tr><td>Date de création</td><td>02/03/2026</td></tr>
+          <tr><td>E-mail de contact</td><td><a href="mailto:catergraphisme@gmail.com">catergraphisme@gmail.com</a></td></tr>
+        </table>
+        <p style="margin-top:10px;">Ci-après dénommée « le Prestataire » ou « Cater Graphisme ».</p>
+      </div>
+    </div>
+
+    <!-- Art. 2 -->
+    <div class="article-card" id="cgv-art2">
+      <div class="article-header">
+        <span class="article-num">ART. 02</span>
+        <span class="article-title">Objet et Description des Services</span>
+      </div>
+      <div class="article-body">
+        <p>Cater Graphisme propose des services de création, modification, débadgeage et personnalisation d'actifs numériques (assets) destinés à des jeux vidéo et plateformes de serveurs communautaires :</p>
+        <ul class="bullet-list">
+          <li>Modification de modèles 3D pour <span class="highlight">GTA V / FiveM</span></li>
+          <li>Débadgeage GTA V / FiveM — suppression des logos de marques réelles</li>
+          <li>Confection de modèles 3D originaux pour <span class="highlight">Minecraft</span> et <span class="highlight">Garry's Mod</span></li>
+          <li>Modification et création de textures pour GTA V / FiveM (vêtements, objets, véhicules)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Art. 3 -->
+    <div class="article-card" id="cgv-art3">
+      <div class="article-header">
+        <span class="article-num">ART. 03</span>
+        <span class="article-title">Processus de Commande</span>
+      </div>
+      <div class="article-body">
+        <p>Les commandes sont passées via les canaux officiels (serveur Discord ou site internet). Pour tout projet sur mesure, un devis ou une validation écrite des spécifications techniques est requis. La commande est définitivement validée après :</p>
+        <ul class="bullet-list">
+          <li>Acceptation écrite du devis ou des spécifications techniques par le Client</li>
+          <li>Réception du paiement ou de l'acompte convenu par le Prestataire</li>
+        </ul>
+        <p>Cater Graphisme se réserve le droit de refuser toute commande contraire à ses valeurs, à la loi ou aux présentes CGV.</p>
+      </div>
+    </div>
+
+    <!-- Art. 4 -->
+    <div class="article-card" id="cgv-art4">
+      <div class="article-header">
+        <span class="article-num">ART. 04</span>
+        <span class="article-title">Tarifs et Paiement</span>
+      </div>
+      <div class="article-body">
+        <p>Les prix sont indiqués en euros (€) et communiqués clairement avant validation de la commande.</p>
+        <div class="info-box">💡 TVA non applicable en vertu de l'article 293 B du Code Général des Impôts (régime micro-entrepreneur — franchise en base de TVA).</div>
+        <ul class="bullet-list">
+          <li>Paiements acceptés : <span class="highlight">PayPal, Stripe</span>, ou tout moyen convenu par écrit</li>
+          <li>Projets &gt; 50 € : acompte de <span class="highlight">50 %</span> exigé à la commande, solde dû à la livraison</li>
+          <li>Commandes de faible montant : paiement intégral avant démarrage</li>
+        </ul>
+        <p>Toute livraison peut être suspendue en cas de défaut ou retard de paiement.</p>
+      </div>
+    </div>
+
+    <!-- Art. 5 -->
+    <div class="article-card" id="cgv-art5">
+      <div class="article-header">
+        <span class="article-num">ART. 05</span>
+        <span class="article-title">Livraison Numérique</span>
+      </div>
+      <div class="article-body">
+        <p>La livraison s'effectue exclusivement par voie numérique (lien de téléchargement, salon Discord privé ou transfert sécurisé).</p>
+        <table class="legal-table">
+          <tr><td>Débadgeage simple / retexture</td><td>2 à 5 jours ouvrés</td></tr>
+          <tr><td>Modification de modèle 3D existant</td><td>5 à 10 jours ouvrés</td></tr>
+          <tr><td>Création de modèle 3D original</td><td>10 à 21 jours ouvrés</td></tr>
+        </table>
+        <p>Ces délais sont indicatifs. Tout retard significatif fera l'objet d'une communication préalable.</p>
+      </div>
+    </div>
+
+    <!-- Art. 6 -->
+    <div class="article-card" id="cgv-art6">
+      <div class="article-header">
+        <span class="article-num">ART. 06</span>
+        <span class="article-title">Révisions et Modifications</span>
+      </div>
+      <div class="article-body">
+        <p>Le nombre de révisions incluses est précisé dans le devis. À défaut, <span class="highlight">deux (2) révisions</span> sont incluses.</p>
+        <p>Au-delà, toute modification supplémentaire fait l'objet d'un devis complémentaire. Les modifications demandées après validation finale sont considérées comme une nouvelle commande.</p>
+      </div>
+    </div>
+
+    <!-- Art. 7 -->
+    <div class="article-card" id="cgv-art7">
+      <div class="article-header">
+        <span class="article-num">ART. 07</span>
+        <span class="article-title">Propriété Intellectuelle et Licence</span>
+      </div>
+      <div class="article-body">
+        <p>L'achat n'emporte pas transfert de propriété intellectuelle, mais l'octroi d'une <span class="highlight">licence d'utilisation personnelle, non-exclusive et non-transférable</span>, limitée à un seul serveur exploité par le Client.</p>
+        <div class="warn-box">⚠ Strictement interdit : revente, cession, redistribution des fichiers sources (« leak »), modification pour en revendiquer la paternité, utilisation sur plusieurs serveurs sans autorisation écrite.</div>
+        <p><strong style="color:var(--white);">Conformité éditeurs (EULA) :</strong> Le Client est seul responsable de la conformité d'usage vis-à-vis des chartes de Rockstar Games, Mojang/Microsoft et Facepunch Studios.</p>
+      </div>
+    </div>
+
+    <!-- Art. 8 -->
+    <div class="article-card" id="cgv-art8">
+      <div class="article-header">
+        <span class="article-num">ART. 08</span>
+        <span class="article-title">Droit de Rétractation</span>
+      </div>
+      <div class="article-body">
+        <p>Conformément à l'article L.221-28 du Code de la consommation, le Client renonce expressément à son droit de rétractation de 14 jours dès lors que la prestation a commencé ou que les fichiers ont été mis à disposition.</p>
+        <p>Cette renonciation est recueillie sous forme de confirmation écrite avant le démarrage des travaux.</p>
+        <div class="info-box">Ce droit ne s'applique pas aux Clients agissant dans le cadre d'une activité professionnelle (B2B).</div>
+      </div>
+    </div>
+
+    <!-- Art. 9 -->
+    <div class="article-card" id="cgv-art9">
+      <div class="article-header">
+        <span class="article-num">ART. 09</span>
+        <span class="article-title">Responsabilité et Garantie</span>
+      </div>
+      <div class="article-body">
+        <ul class="bullet-list">
+          <li><span class="highlight">Mises à jour :</span> Les fichiers sont fonctionnels à la livraison. Si une mise à jour officielle les rend obsolètes, le Prestataire n'en est pas responsable. Le support post-MAJ peut être facturé.</li>
+          <li><span class="highlight">Sanctions éditeurs :</span> Aucune responsabilité en cas de sanctions ou bannissements par Rockstar Games, CFX / FiveM, etc.</li>
+          <li><span class="highlight">Plafond :</span> La responsabilité est limitée au montant total de la prestation concernée.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Art. 10 -->
+    <div class="article-card" id="cgv-art10">
+      <div class="article-header">
+        <span class="article-num">ART. 10</span>
+        <span class="article-title">Force Majeure</span>
+      </div>
+      <div class="article-body">
+        <p>Cater Graphisme ne peut être tenu responsable de tout retard ou inexécution résultant d'un cas de force majeure au sens de l'article 1218 du Code civil (panne majeure, maladie grave, catastrophe naturelle, etc.). Le Prestataire s'engage à informer le Client dans les meilleurs délais et à proposer une solution adaptée.</p>
+      </div>
+    </div>
+
+    <!-- Art. 11 -->
+    <div class="article-card" id="cgv-art11">
+      <div class="article-header">
+        <span class="article-num">ART. 11</span>
+        <span class="article-title">Médiation et Règlement des Litiges</span>
+      </div>
+      <div class="article-body">
+        <p>En cas de litige, une solution amiable est prioritairement recherchée. Conformément aux articles L.616-1 et R.616-1 du Code de la consommation, le Client consommateur peut recourir à un médiateur agréé.</p>
+        <div class="info-box">Plateforme européenne de règlement en ligne : <a href="https://ec.europa.eu/consumers/odr" style="color:var(--orange-light);">ec.europa.eu/consumers/odr</a></div>
+      </div>
+    </div>
+
+    <!-- Art. 12 -->
+    <div class="article-card" id="cgv-art12">
+      <div class="article-header">
+        <span class="article-num">ART. 12</span>
+        <span class="article-title">Loi Applicable et Tribunal Compétent</span>
+      </div>
+      <div class="article-body">
+        <p>Les présentes CGV sont soumises au droit français. En cas de litige persistant, le <span class="highlight">Tribunal Judiciaire de Brive-la-Gaillarde</span> sera seul compétent, sauf disposition légale contraire applicable aux consommateurs.</p>
+      </div>
+    </div>
+
+    <!-- SEPARATOR -->
+    <div class="page-break" data-label="CONDITIONS GÉNÉRALES D'UTILISATION"></div>
+
+    <!-- ═══════════════════════════════════════════
+         CGU
+    ═══════════════════════════════════════════ -->
+    <div class="section-header">
+      <span class="section-num">SECTION 02</span>
+      <span class="section-title">Conditions Générales d'Utilisation</span>
+    </div>
+
+    <!-- CGU Art. 1 -->
+    <div class="article-card" id="cgu-art1">
+      <div class="article-header">
+        <span class="article-num">ART. 01</span>
+        <span class="article-title">Objet</span>
+      </div>
+      <div class="article-body">
+        <p>Les présentes CGU définissent les règles d'accès et d'utilisation des espaces communautaires et commerciaux (site internet, serveur Discord) de Cater Graphisme. L'accès implique l'acceptation sans réserve des présentes CGU.</p>
+      </div>
+    </div>
+
+    <!-- CGU Art. 2 -->
+    <div class="article-card" id="cgu-art2">
+      <div class="article-header">
+        <span class="article-num">ART. 02</span>
+        <span class="article-title">Comportement et Sécurité</span>
+      </div>
+      <div class="article-body">
+        <p>Sont strictement interdits :</p>
+        <ul class="bullet-list">
+          <li>Insultes, propos haineux, racistes, discriminatoires ou harcelants</li>
+          <li>Spam, publicité non sollicitée, démarchage abusif</li>
+          <li>Extraction frauduleuse, piratage ou partage de fichiers propriétaires</li>
+          <li>Usurpation d'identité ou représentation frauduleuse d'un tiers</li>
+          <li>Contenus illicites, diffamatoires ou portant atteinte aux droits de tiers</li>
+          <li>Tout contenu <span class="highlight">NSFW</span> ou à caractère sexuel explicite</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- CGU Art. 3 -->
+    <div class="article-card" id="cgu-art3">
+      <div class="article-header">
+        <span class="article-num">ART. 03</span>
+        <span class="article-title">Modération</span>
+      </div>
+      <div class="article-body">
+        <p>En cas de non-respect des CGU, Cater Graphisme peut :</p>
+        <ul class="bullet-list">
+          <li>Avertir l'utilisateur par message privé</li>
+          <li>Restreindre ou supprimer temporairement l'accès</li>
+          <li>Bannir définitivement en cas de faute grave avérée</li>
+          <li>Annuler les commandes en cours sans remboursement en cas de faute grave</li>
+        </ul>
+        <p>Ces mesures peuvent être prises sans préavis en cas d'urgence ou comportement manifestement illicite.</p>
+      </div>
+    </div>
+
+    <!-- CGU Art. 4 -->
+    <div class="article-card" id="cgu-art4">
+      <div class="article-header">
+        <span class="article-num">ART. 04</span>
+        <span class="article-title">Données Personnelles (RGPD)</span>
+      </div>
+      <div class="article-body">
+        <p><strong style="color:var(--white);">Responsable du traitement :</strong> Ewann MARION — Brive-la-Gaillarde (19100)</p>
+        <p>Données collectées : pseudonyme Discord, adresse e-mail, données de transactions — strictement nécessaires au traitement des commandes.</p>
+        <p><strong style="color:var(--white);">Vos droits (RGPD — UE 2016/679) :</strong></p>
+        <ul class="bullet-list">
+          <li>Accès, rectification, effacement, opposition au traitement de vos données</li>
+          <li>Pour exercer ces droits : <a href="mailto:catergraphisme@gmail.com" style="color:var(--orange-light);">catergraphisme@gmail.com</a></li>
+        </ul>
+        <p>Conservation : <span class="highlight">3 ans</span> après la dernière commande. Données non revendues. Transmises uniquement aux prestataires de paiement (PayPal, Stripe).</p>
+        <div class="info-box">En cas de litige sur vos données : <a href="https://www.cnil.fr" style="color:var(--orange-light);">www.cnil.fr</a></div>
+      </div>
+    </div>
+
+    <!-- CGU Art. 5 -->
+    <div class="article-card" id="cgu-art5">
+      <div class="article-header">
+        <span class="article-num">ART. 05</span>
+        <span class="article-title">Loi Applicable et Tribunal Compétent</span>
+      </div>
+      <div class="article-body">
+        <p>Les présentes CGU sont soumises au droit français. En cas de litige non résolu amiablement, le <span class="highlight">Tribunal Judiciaire de Brive-la-Gaillarde</span> sera seul compétent, sauf disposition légale contraire applicable aux consommateurs.</p>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">Cater Graphisme</div>
+  <div class="footer-meta">VERSION 2.0 — MAI 2026 — SIRET 101 905 842 00015 — <a href="mailto:catergraphisme@gmail.com" style="color:var(--gray);text-decoration:none;">catergraphisme@gmail.com</a></div>
+</footer>
+
+</body>
+</html>
